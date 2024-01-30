@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"name": "HunterOS",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"cmath": "cpp",
+			"string": "cpp"
+		}
+	}
+}
