@@ -9,6 +9,10 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 #include <iostream>
+#include "screen.h"
+
+using namespace hunteros;
+using namespace std;
 
 
 HTTPClient http;
@@ -37,6 +41,7 @@ String app = "hunteros";
 #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
 #define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+screen sc;
 
 String incoming = "";
 unsigned long lastInputEpoch = 0;
@@ -165,12 +170,6 @@ void writeBlue(String text, int x, int y, bool clear=true) {
   delay(1);
 }
 
-void drawMenuSkeleton() {
-  display.drawRoundRect(0, 16, 128, 12, 3, SSD1306_WHITE);
-  display.fillRoundRect(0, 30, 128, 10, 3, white);
-  display.drawRoundRect(0, 42, 128, 12, 3, SSD1306_WHITE);
-}
-
 void drawMenuItem(int position, String text) {
   if (position == 0) {
     writeBlue(text, 5, 2, false);
@@ -281,10 +280,10 @@ void drawMenu(bool isUp=true, bool isFresh=false) {
   timeClient.update();
   display.clearDisplay();
   drawBar(isFresh);
-  drawMenuSkeleton();
+  sc.drawMenuSkeleton(display);
   drawMenuItems(isUp, isFresh);
 }
-
+ 
 void showApplications() {
   clearBlue();
   writeBlue("This is the applications page.");
@@ -350,6 +349,7 @@ void resetSleepTimer() {
 }
 
 void setup() {
+  screen sc;
   startupMillis = millis();
   // while(millis() - startupMillis < 60000)
   // {

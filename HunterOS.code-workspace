@@ -8,7 +8,8 @@
 	"settings": {
 		"files.associations": {
 			"cmath": "cpp",
-			"string": "cpp"
+			"string": "cpp",
+			"wifi.h": "c"
 		}
 	}
 }
